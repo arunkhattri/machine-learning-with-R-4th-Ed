@@ -1,0 +1,111 @@
+#+title: Introducing Machine Learning
+
+* R data structures
+
+** Vectors
+The fundamental R data structure is the *vector*, which stores an ordered set of values called *elements*.
+*** Characteristics
++ can contain any number of elements.
++ elements must be of same type.
+*** vector types:
++ integer - numbers without decimal
++ double - numbers with decimal
++ character - text data
++ logical - ~TRUE~ or ~FALSE~ values
+  some R functions will report both ~integer~ and ~double~ vectors as ~numeric~.
+*** Examples:
+
+let's construct a set of vectors containing data on three football players.
+
+#+begin_src R :session *r-session* :results output :exports code
+players <- c("mbappe", "messi", "giroud", "morata", "saka")
+country <- c("france", "argentina", "france", "spain", "england")
+goals <- c(5, 4, 4, 3, 3)
+in_sf <- c(TRUE, TRUE, TRUE, FALSE, FALSE)
+#+end_src
+
+#+RESULTS:
+
+values stored in R vectors retain their order.
+obtain the 2nd player:
+
+#+begin_src R :session *r-session* :results output :exports both
+players[2]
+#+end_src
+
+#+RESULTS:
+: [1] "messi"
+
+to extract data from vectors, colon operator can be used :
+
+#+begin_src R :session *r-session* :results output :exports both
+country[2:4]
+#+end_src
+
+#+RESULTS:
+: [1] "argentina" "france"    "spain"
+
+items  can be excluded by specifying a negative item number.
+
+#+begin_src R :session *r-session* :results output :exports both
+players[-3]
+#+end_src
+
+#+RESULTS:
+: [1] "mbappe" "messi"  "morata" "saka"
+
+using logical vector to indicate include or exclude an item:
+
+#+begin_src R :session *r-session* :results output :exports both
+country[c(FALSE, TRUE, TRUE, TRUE, FALSE)]
+#+end_src
+
+#+RESULTS:
+: [1] "argentina" "france"    "spain"
+
+Above example acts like a filter, to use it more effectively:
+
+#+begin_src R :session *r-session* :results output :exports both
+golden_boot <- goals >= 4
+players[golden_boot]
+#+end_src
+
+#+RESULTS:
+: [1] "mbappe" "messi"  "giroud"
+
+** Factors
+A special type of vector that is solely used for representing categorical or ordinal data.
+
+#+begin_src R :session *r-session* :results output :exports both
+gender <- factor(c('male', 'female', 'male'))
+gender
+#+end_src
+
+#+RESULTS:
+: [1] male   female male
+: Levels: female male
+
+When we create factors, we can add additional levels that may not appear in the original data.
+
+#+begin_src R :session *r-session* :results output :exports both
+blood <- factor(c("O", "AB", "A"),
+                levels = c("A", "B", "AB", "O"))
+blood
+#+end_src
+
+#+RESULTS:
+: [1] O  AB A
+: Levels: A B AB O
+
+factor also allows to create ordinal data. We indicate the presence of ordinal data by providing the factor's levels in the desired order (lowest to highest), and setting the ~ordered~ parameter to ~TRUE~:
+
+#+begin_src R :session *r-session* :results output :exports both
+aqi_category <- factor(c("poor", "good", "moderate", "satisfactory"),
+                       levels = c("poor", "moderate", "satisfactory", "good"),
+                       ordered = TRUE)
+aqi_category
+#+end_src
+
+#+RESULTS:
+: [1] poor         good         moderate     satisfactory
+: Levels: poor < moderate < satisfactory < good
