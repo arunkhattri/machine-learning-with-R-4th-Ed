@@ -306,7 +306,7 @@ the ~load()~ command can recreate any data structures that have been saved to an
 load("mydata.RData")
 #+end_example
 
-*** ~.rds
+*** ~.rds~
 Alternatively, the ~saveRDS()~ function can be used to save a single R object to a file. Although it is much like the ~save()~ function, a key distinction is that the corresponding ~loadRDS()~ function allows the object to be loaded with a different name than the original object.
 
 To save a model object named ~my_model~ to a file named ~my_model.rds~ -
